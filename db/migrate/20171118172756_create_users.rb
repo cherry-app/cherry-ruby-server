@@ -13,6 +13,6 @@ class CreateUsers < ActiveRecord::Migration[5.1]
       t.timestamps
     end
 
-    add_index :users, :uid, unique: true
+    add_index :uid, unique: true
   end
 end

@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   
   post 'signup', to: 'signup#do'
+  post 'verify', to: 'signup#verify'
   
   get 'welcome/index'
   root 'welcome#index'
