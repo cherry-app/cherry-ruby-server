@@ -25,6 +25,6 @@ production:
   encoding: unicode
   database: cherrydb
   pool: 5
-  username: <%= ENV.fetch("PGDB_USERNAME") %>
-  password: <%= ENV.fetch("PGDB_PASSWORD") %>
-  host: <%= ENV.fetch("PGDB_PATH") %>
+  username: <%= ENV['PGDB_USERNAME'] %>
+  password: <%= ENV['PGDB_PASSWORD'] %>
+  host: <%= ENV['PGDB_PATH'] %>
