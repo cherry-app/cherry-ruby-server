@@ -32,7 +32,7 @@ class SignupController < ApplicationController
         
         http = Net::HTTP.new(uri.host, uri.port)
         req = Net::HTTP::Post.new(uri.path, 'Content-Type' => 'application/json')
-        req['authkey'] = ENV['MSG91_AUTH_KEY']
+        req['authkey'] = Rails.application.secrets.MSG91_AUTH_KEY
         req.body = {
             sender: 'CHERRY',
             route: '4',
