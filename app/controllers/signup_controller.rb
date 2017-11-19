@@ -1,5 +1,7 @@
 require 'bcrypt'
 
+$MAX_OTP_RESEND_COUNT = 3
+
 class SignupController < ApplicationController
     skip_before_action :verify_authenticity_token
     def do
@@ -81,5 +83,37 @@ class SignupController < ApplicationController
                 message: "Incorrect OTP or token"
             }, status: 401
         end
+    end
+
+    def resend_otp
+        phone_number = params["phone_number"]
+        login_token = params["login_token"]
+        
+        user = User.where(:login_code => otp, :auth => login_token).first
+
+        if user != nil
+            if user.otp_count == nil
+                user.otp_count = 0 
+            end
+            if user.otp_count < MAX_OTP_RESEND_COUNT
+                user.otp_count = user.otp_count + 1
+                user.save()
+
+                send_otp(user.otp, user.uid)
+                
+                render :json => {
+                    message: "OTP sent"
+                    attempts_left: MAX_OTP_RESEND_COUNT - user.otp_count
+                }, status: 401
+            else
+                render :json => {
+                    message: "You have exceeded OTP resend limit"
+                }, status: 403
+            end
+        else
+            render :json => {
+                message: "Phone number or login token invalid"
+            }, status: 404
+        end     
     end
 end
