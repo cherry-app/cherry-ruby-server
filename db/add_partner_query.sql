@@ -1,0 +1,1 @@
+insert into partners(name, key, active, created_at, updated_at) values ('Name', 'key', 't', current_timestamp, current_timestamp);
