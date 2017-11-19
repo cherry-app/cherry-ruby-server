@@ -104,7 +104,7 @@ class SignupController < ApplicationController
                 render :json => {
                     message: "OTP sent"
                     attempts_left: MAX_OTP_RESEND_COUNT - user.otp_count
-                }, status: 401
+                }, status: 200
             else
                 render :json => {
                     message: "You have exceeded OTP resend limit"
