@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
-  #rescue_from StandardError,
-  #with: :render_standard_error
+  rescue_from StandardError,
+  with: :render_standard_error
 
   def render_standard_error
     render json: {

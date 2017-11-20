@@ -80,7 +80,7 @@ class SignupController < ApiController
             sms: [
                 message: 'Your OTP for logging in to Cherry is ' + otp + '.',
                 to: [
-                    phone_number
+                    phone_number.last(10)
                 ]
             ]
         }.to_json
