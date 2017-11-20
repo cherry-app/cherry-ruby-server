@@ -1,6 +1,7 @@
 class ApiController < ApplicationController
 
     before_action :require_partner_id_check
+    skip_before_action :verify_authenticity_token
 
     def require_partner_id_check
         partner_id = request.headers["Cherry-Partner-ID"]

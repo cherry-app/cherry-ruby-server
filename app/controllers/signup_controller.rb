@@ -3,7 +3,7 @@ require 'bcrypt'
 MAX_OTP_RESEND_COUNT = 3
 
 class SignupController < ApiController
-    skip_before_action :verify_authenticity_token
+    
     def do
         
         name = params["name"]

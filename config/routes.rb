@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   post 'signup', to: 'signup#do'
   post 'verify', to: 'signup#verify'
   post 'resend_otp', to: 'signup#resend_otp'
+  post 'sync_contacts', to: 'sync#contacts'
   
   get 'welcome/index'
   root 'welcome#index'
