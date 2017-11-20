@@ -1,6 +1,6 @@
 class AuthenticatedApiController < ApiController
 
-    #before_action :require_auth_check
+    before_action :require_auth_check
 
     def require_auth_check
         uid = request.headers["Cherry-UID"]
