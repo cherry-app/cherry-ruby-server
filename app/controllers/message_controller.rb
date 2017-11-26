@@ -16,7 +16,7 @@ class MessageController < AuthenticatedApiController
             sentTime = msg["sentTime"]
             content = msg["content"]
             
-            recipientUser = Users.where(:uid => recipientId, :verified => true).first
+            recipientUser = User.where(:uid => recipientId, :verified => true).first
             result = false
             if recipientUser != nil
                 result = send_fcm_message(recipientUser.fcm_token, senderId, sentTime, content)
@@ -56,11 +56,19 @@ class MessageController < AuthenticatedApiController
         fcm_token = params["fcm_token"]
         senderId = request.headers["Cherry-UID"]
         
-        user = Users.where(:uid => senderId, :verified => true).first
+        user = User.where(:uid => senderId, :verified => true).first
 
         if user != nil
             user.fcm_token = fcm_token
             user.save() 
+            render :json => {
+                message: "Token updated"
+            }, status: 200
+        else
+            render :json => {
+                message: "User not found"
+            }, status: 404
+            
         end
     end
 
