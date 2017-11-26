@@ -49,6 +49,7 @@ class MessageController < AuthenticatedApiController
             return true
         else
             return false
+        end
     end
 
     def update_fcm_token
