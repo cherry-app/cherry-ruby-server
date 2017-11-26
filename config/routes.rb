@@ -4,6 +4,9 @@ Rails.application.routes.draw do
   post 'verify', to: 'signup#verify'
   post 'resend_otp', to: 'signup#resend_otp'
   post 'sync_contacts', to: 'sync#contacts'
+
+  post 'seen', to: 'message#seen'
+  post 'message', to: 'message#publish'
   
   get 'welcome/index'
   root 'welcome#index'
