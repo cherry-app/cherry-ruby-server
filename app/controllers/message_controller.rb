@@ -37,10 +37,10 @@ class MessageController < AuthenticatedApiController
         
         uri = URI.parse('https://fcm.googleapis.com/fcm/send')
         http = Net::HTTP.new(uri.host, uri.port)
-        request = Net::HTTP::Post.new(uri.path, 'Content-Type' => 'application/json')
-        request['Authorization'] = "key=" + Rails.application.secrets.FCM_SERVER_KEY
+        req = Net::HTTP::Post.new(uri.path, 'Content-Type' => 'application/json')
+        req['Authorization'] = "key=" + Rails.application.secrets.FCM_SERVER_KEY
         
-        request.set_form_data({
+        req.set_form_data({
             to: token,
             notification: {
                 senderId: senderId,
@@ -49,7 +49,9 @@ class MessageController < AuthenticatedApiController
             }
         })
 
-        if response.code == 200
+        res = http.request(req)
+
+        if res.code == 200
             return true
         else
             return false
