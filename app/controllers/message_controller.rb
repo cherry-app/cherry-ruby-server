@@ -27,22 +27,23 @@ class MessageController < AuthenticatedApiController
                 failedMessages << messageId
             end
         end
-        render json: {
-            succeeded: successMessages,
-            failed: failedMessages
-          }, status:200
+        #render json: {
+        #    succeeded: successMessages,
+        #    failed: failedMessages
+        #  }, status:200
     end
 
     def send_fcm_message(token, senderId, timestamp, content)
         
         uri = URI.parse('https://fcm.googleapis.com/fcm/send')
         http = Net::HTTP.new(uri.host, uri.port)
+        http.use_ssl = true
         req = Net::HTTP::Post.new(uri.path, 'Content-Type' => 'application/json')
         req['Authorization'] = "key=" + Rails.application.secrets.FCM_SERVER_KEY
         
         req.set_form_data({
             to: token,
-            notification: {
+            data: {
                 senderId: senderId,
                 sentTime: timestamp,
                 content: content
@@ -50,7 +51,7 @@ class MessageController < AuthenticatedApiController
         })
 
         res = http.request(req)
-
+        render :plain => res.body
         if res.code == 200
             return true
         else
