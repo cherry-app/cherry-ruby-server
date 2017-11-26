@@ -12,7 +12,6 @@ gem 'rails', '~> 5.1.2'
 gem 'sqlite3'
 gem 'pg'
 gem 'bcrypt', :require => 'bcrypt' 
-gem 'fcm', :require => 'fcm' 
 # Use Puma as the app server
 gem 'puma', '~> 3.7'
 # Use SCSS for stylesheets

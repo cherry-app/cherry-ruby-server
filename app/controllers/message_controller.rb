@@ -1,4 +1,4 @@
-require 'fcm'
+require 'net/http'
 
 class MessageController < AuthenticatedApiController
 
@@ -34,18 +34,22 @@ class MessageController < AuthenticatedApiController
     end
 
     def send_fcm_message(token, senderId, timestamp, content)
-        fcm = FCM.new(Rails.application.secrets.FCM_SERVER_KEY)
-        registration_ids = [token]
-        options = {
-            data: {
+        
+        uri = URI.parse('https://fcm.googleapis.com/fcm/send')
+        http = Net::HTTP.new(uri.host, uri.port)
+        request = Net::HTTP::Post.new(uri.path, 'Content-Type' => 'application/json')
+        request['Authorization'] = "key=" + Rails.application.secrets.MSG91_AUTH_KEY
+        
+        request.set_form_data({
+            to: token,
+            notification: {
                 senderId: senderId,
-                content: content,
-                sentTime: timestamp
+                sentTime: timestamp,
+                content: content
             }
-        }
-        response = fcm.send(registration_ids, options)
+        })
 
-        if response.status_code == 200
+        if response.code == 200
             return true
         else
             return false
