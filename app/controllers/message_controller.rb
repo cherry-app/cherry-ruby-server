@@ -15,11 +15,14 @@ class MessageController < AuthenticatedApiController
             recipientId = msg["recipientId"]
             sentTime = msg["sentTime"]
             content = msg["content"]
-            
+            response_code = 'nil'
             recipientUser = User.where(:uid => recipientId, :verified => true).first
             result = false
             if recipientUser != nil
-                result = send_fcm_message(recipientUser.fcm_token, senderId, sentTime, content)
+                response_code = send_fcm_message(recipientUser.fcm_token, senderId, sentTime, content)
+                if response_code == '200'
+                    result = true
+                end
             end
             if result == true
                 successMessages << messageId
@@ -28,6 +31,7 @@ class MessageController < AuthenticatedApiController
             end
         end
         render json: {
+            code: response_code,
             succeeded: successMessages,
             failed: failedMessages
           }, status:200
@@ -52,12 +56,7 @@ class MessageController < AuthenticatedApiController
 
         success = false
         res = http.request(req)
-        if res.code == '200'
-            success = true
-        else
-            success = false
-        end
-        success
+        res.code
     end
 
     def update_fcm_token
