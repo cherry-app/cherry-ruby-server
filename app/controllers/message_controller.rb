@@ -50,12 +50,14 @@ class MessageController < AuthenticatedApiController
             }
         })
 
+        success = false
         res = http.request(req)
-        if res.code == 200
-            return true
+        if res.code == '200'
+            success = true
         else
-            return false
+            success = false
         end
+        success
     end
 
     def update_fcm_token
