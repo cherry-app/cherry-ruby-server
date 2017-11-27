@@ -20,9 +20,11 @@ class MessageController < AuthenticatedApiController
             result = false
             response_code = 'nil'
             if recipientUser != nil
-                response_code = send_fcm_message(recipientUser.fcm_token, senderId, sentTime, content)
-                if response_code == '200'
-                    result = true
+                if recipientUser.fcm_token != nil
+                    response_code = send_fcm_message(recipientUser.fcm_token, senderId, sentTime, content)
+                    if response_code == '200'
+                        result = true
+                    end
                 end
             end
             codes << response_code
@@ -33,8 +35,6 @@ class MessageController < AuthenticatedApiController
             end
         end
         render json: {
-            code: codes,
-            key: "key=" + Rails.application.secrets.FCM_SERVER_KEY,
             succeeded: successMessages,
             failed: failedMessages
           }, status:200
