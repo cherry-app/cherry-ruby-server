@@ -55,7 +55,7 @@ class MessageController < AuthenticatedApiController
                 sentTime: timestamp,
                 content: content
             }
-        }
+        }.to_json
 
         success = false
         res = http.request(req)
