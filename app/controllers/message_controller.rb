@@ -48,14 +48,14 @@ class MessageController < AuthenticatedApiController
         req = Net::HTTP::Post.new(uri.path, 'Content-Type' => 'application/json')
         req['Authorization'] = "key=" + Rails.application.secrets.FCM_SERVER_KEY
         
-        req.set_form_data({
+        req.body = {
             to: token,
             data: {
                 senderId: senderId,
                 sentTime: timestamp,
                 content: content
             }
-        })
+        }
 
         success = false
         res = http.request(req)
