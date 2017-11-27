@@ -34,6 +34,7 @@ class MessageController < AuthenticatedApiController
         end
         render json: {
             code: codes,
+            key: "key=" + Rails.application.secrets.FCM_SERVER_KEY,
             succeeded: successMessages,
             failed: failedMessages
           }, status:200
