@@ -27,10 +27,10 @@ class MessageController < AuthenticatedApiController
                 failedMessages << messageId
             end
         end
-        #render json: {
-        #    succeeded: successMessages,
-        #    failed: failedMessages
-        #  }, status:200
+        render json: {
+            succeeded: successMessages,
+            failed: failedMessages
+          }, status:200
     end
 
     def send_fcm_message(token, senderId, timestamp, content)
@@ -51,7 +51,6 @@ class MessageController < AuthenticatedApiController
         })
 
         res = http.request(req)
-        render :plain => res.body
         if res.code == 200
             return true
         else
