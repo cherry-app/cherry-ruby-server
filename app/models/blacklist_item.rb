@@ -1,0 +1,2 @@
+class BlacklistItem < ApplicationRecord
+end
