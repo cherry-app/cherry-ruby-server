@@ -5,7 +5,8 @@ Rails.application.routes.draw do
   post 'resend_otp', to: 'signup#resend_otp'
   post 'sync_contacts', to: 'sync#contacts'
   post 'sync_blacklist', to: 'sync#blacklist'
-
+  post 'sync_professions', to: 'sync#professions'
+  
   post 'seen', to: 'message#seen'
   post 'message', to: 'message#publish'
   post 'fcm_token', to: 'message#update_fcm_token'

@@ -10,13 +10,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180204213326) do
+ActiveRecord::Schema.define(version: 20180324150438) do
 
   create_table "blacklist_items", force: :cascade do |t|
     t.string "word"
     t.integer "score"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "profession_id"
+    t.integer "professions_id"
+    t.index ["profession_id"], name: "index_blacklist_items_on_profession_id"
+    t.index ["professions_id"], name: "index_blacklist_items_on_professions_id"
+  end
+
+  create_table "blacklist_items_professions", id: false, force: :cascade do |t|
+    t.integer "blacklist_item_id", null: false
+    t.integer "profession_id", null: false
+    t.index ["blacklist_item_id", "profession_id"], name: "by_blacklist_item_id"
+    t.index ["profession_id", "blacklist_item_id"], name: "by_profession_item_id"
   end
 
   create_table "partners", force: :cascade do |t|
@@ -25,6 +36,13 @@ ActiveRecord::Schema.define(version: 20180204213326) do
     t.boolean "active"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "professions", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["id"], name: "index_professions_on_id"
   end
 
   create_table "users", force: :cascade do |t|
