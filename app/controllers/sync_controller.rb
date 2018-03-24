@@ -18,9 +18,4 @@ class SyncController < AuthenticatedApiController
         render json: items, status: 200
     end
 
-    def professions
-        professions = Profession.select(:id, :name)
-        render json: professions, status: 200
-    end
-
 end
