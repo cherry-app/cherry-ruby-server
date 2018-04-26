@@ -1,5 +1,5 @@
 # config valid only for current version of Capistrano
-lock "3.10.0"
+lock "3.10.1"
 
 set :application, 'Cherry'
 set :repo_url, 'git@github.com:cherry-app/cherry-ruby-server.git' # Edit this to match your repository
